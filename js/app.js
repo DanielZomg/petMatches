@@ -9,7 +9,8 @@ const users = [ "Hope", "Z0mgphunk", "Miyu", "te Cain", "Dale", "Magdalina", "Ai
 // —————————————————————————————————————————
 const skillList = [
   "Uncharted Waters","Masquerade Ball","Negotiations","War of Conquest",
-  "School of Athens","Dragon Island Treasure Hunt","Knight Parades"
+  "School of Athens","Dragon Island Treasure Hunt","Knight Parades",
+  "Murder Mystery"
   /* ...add the rest... */
 ];
 
@@ -21,6 +22,7 @@ const skillAttrs = {
   "School of Athens": ["Intelligence", "Obedience"],
   "Dragon Island Treasure Hunt": ["Intelligence", "Friendliness"],
   "Knight Parades": ["Intelligence", "Friendliness"],
+  "Murder Mystery": ["Obedience", "Liveliness"]
   /* ...add the rest... */
 };
 
