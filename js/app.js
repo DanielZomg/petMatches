@@ -79,9 +79,11 @@ async function fetchPets() {
         }
 
         // If the column is 'bold1Value' or 'bold2Value', parse as integers
-        pet[key] = (key === 'bold1Value' || key === 'bold2Value')
-          ? parseInt(value, 10) || 0
-          : value;
+        if (key == 'bold1Value' || key == 'bold2Value') {
+          pet[key] = parseInt(value, 10) || 0;
+        } else {
+          pet[key] = value; // this now uses the trimmed version!
+        }
       }
 
       return pet;
