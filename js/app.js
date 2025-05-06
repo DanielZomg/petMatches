@@ -25,85 +25,128 @@ const skillAttrs = {
 };
 
 // —————————————————————————————————————————
-//  3) Pets
+//  3) Pets - will be populated from Google Sheets
 // —————————————————————————————————————————
-const pets = [
-  {
-    owner:       "Z0mgphunk",
-    name:        "Milkshake",
-    species:     "Cat",
-    breed:       "Bengal",
-    bold1Value:  72,
-    bold2Value:  72,
-    skill:       "Uncharted Waters",
-    bloodline:   "Gold"
-  },
-  {
-    owner:       "Z0mgphunk",
-    name:        "Siri",
-    species:     "Cat",
-    breed:       "Siamese",
-    bold1Value:  79,
-    bold2Value:  76,
-    skill:       "Masquerade Ball",
-    bloodline:   "Gold"
-  },
-  {
-    owner:       "Z0mgphunk",
-    name:        "Egg Roll",
-    species:     "Dog",
-    breed:       "German Shepherd",
-    bold1Value:  71,
-    bold2Value:  76,
-    skill:       "Negotiations",
-    bloodline:   "Silver"
-  },
-  {
-    owner:       "Z0mgphunk",
-    name:        "Toon",
-    species:     "Dog",
-    breed:       "German Shepherd",
-    bold1Value:  72,
-    bold2Value:  77,
-    skill:       "Negotiations",
-    bloodline:   "Silver"
-  },
-  {
-    owner:       "Miyu",
-    name:        "Shippy",
-    species:     "Cat",
-    breed:       "Bengal",
-    bold1Value:  86,
-    bold2Value:  80,
-    skill:       "Uncharted Waters",
-    bloodline:   "Gold"
-  },
-];
+let pets = [];
+
+// Google Sheets JSON URL
+const PETS_JSON_URL = "https://docs.google.com/spreadsheets/d/1dugaEHpf8IVVkN5WeX6OwSAtIYoRNzATCFaLkJgou8o/gviz/tq?tqx=out:json&sheet=Pets";
 
 // —————————————————————————————————————————
 //  4) Bloodline helper
 // —————————————————————————————————————————
-/*
-// Maybe for a future update?
-function computeBloodline(a,b) {
-  if (a>=90 && b>=90) return "Gold";
-  if (a>=75 && b>=75) return "Silver";
-  if (a>=60 && b>=60) return "Bronze";
-  return "None";
-}
-*/
 const bloodRank = { None:0, Bronze:1, Silver:2, Gold:3 };
 
 // —————————————————————————————————————————
-//  5) Entry point
+//  5) CSV Parser and Data Fetching
 // —————————————————————————————————————————
-window.addEventListener("DOMContentLoaded",()=>{
-  if (document.getElementById("searchApp")) initSearchApp();
-  if (document.getElementById("petsApp"))   initMyPetsApp();
-});
+function parseCSV(csvText) {
+  const lines = csvText.trim().split('\n');
+  return lines.map(line => {
+    // Handle both quoted and unquoted values
+    const values = [];
+    let inQuote = false;
+    let currentValue = '';
+
+    for (let i = 0; i < line.length; i++) {
+      const char = line[i];
+
+      if (char === '"' && !inQuote) {
+        inQuote = true;
+      } else if (char === '"' && inQuote) {
+        inQuote = false;
+      } else if (char === ',' && !inQuote) {
+        values.push(currentValue);
+        currentValue = '';
+      } else {
+        currentValue += char;
+      }
+    }
+
+    // Add the last value
+    values.push(currentValue);
+    return values;
+  });
+}
+
+async function fetchPets() {
+  try {
+    const response = await fetch(PETS_JSON_URL);
+    const text = await response.text();
+
+    // Remove the wrapper function from the Visualization API response
+    const json = JSON.parse(text.substring(47).slice(0, -2));
+    const table = json.table;
+
+    // Get valid headers (non-empty labels only)
+    const headers = table.cols
+      .map(col => col.label)
+      .filter(label => label); // remove empty labels from unnamed columns
+
+    // Map rows to objects using the filtered headers
+    pets = table.rows.map(row => {
+      const pet = {};
+      let headerIndex = 0;
+
+      // We only iterate over non-empty headers, skipping empty columns
+      for (let i = 0; i < table.cols.length; i++) {
+        const colLabel = table.cols[i].label;
+        if (!colLabel) continue; // skip unnamed/empty columns
+
+        const cell = row.c[i];
+        const value = cell ? cell.v : '';
+        const key = headers[headerIndex++];
+
+        pet[key] = (key === 'bold1Value' || key === 'bold2Value')
+          ? parseInt(value, 10) || 0
+          : value;
+      }
+
+      return pet;
+    });
+
+    console.log(`✅ Loaded ${pets.length} pets`);
+    if (document.getElementById("searchApp")) initSearchApp();
+    if (document.getElementById("petsApp")) initMyPetsApp();
+
+  } catch (error) {
+    console.error("❌ Error fetching pets data:", error);
+
+    // Display error and fallback
+    const errorMsg = document.createElement('div');
+    errorMsg.className = 'error-message';
+    errorMsg.innerHTML = `
+      <p>Error loading pets data from Google Sheets. ${error.message}</p>
+      <p>Using fallback data instead.</p>
+    `;
+    document.body.prepend(errorMsg);
+
+    // Fallback pet data
+    pets = [
+      {
+        owner: "Z0mgphunk",
+        name: "Milkshake",
+        species: "Cat",
+        breed: "Bengal",
+        bold1Value: 72,
+        bold2Value: 72,
+        skill: "Uncharted Waters",
+        bloodline: "Gold"
+      }
+    ];
+
+    if (document.getElementById("searchApp")) initSearchApp();
+    if (document.getElementById("petsApp")) initMyPetsApp();
+  }
+}
 
 // —————————————————————————————————————————
-//  6) Search Pets Page
+//  6) Entry point - modified to fetch data first
+// —————————————————————————————————————————
+window.addEventListener("DOMContentLoaded", fetchPets);
+
+// —————————————————————————————————————————
+//  7) Search Pets page
 // —————————————————————————————————————————
 function initSearchApp() {
   const app = document.getElementById("searchApp");
@@ -204,7 +247,7 @@ function renderResults(list){
   const d = document.getElementById("results");
   if (!list.length) return d.innerHTML = "<p>No pets found.</p>";
 
-  // header uses the two attrs of the first pet's skill
+  // header uses the two bold attributes of the first pet
   const [h1,h2] = skillAttrs[list[0].skill];
   let html = `
     <table>
@@ -231,7 +274,7 @@ function renderResults(list){
 }
 
 // —————————————————————————————————————————
-//  7) "Our pets" page (display (for now?))
+//  8) "Our pets" page
 // —————————————————————————————————————————
 function initMyPetsApp(){
   const app = document.getElementById("petsApp");
@@ -258,6 +301,9 @@ function renderUserPets(username){
   if (!username) return d.innerHTML = "";
   if (!list.length) return d.innerHTML = "<p>No pets for this user.</p>";
 
+  // Check if the list has items before trying to access skills
+  if (list.length === 0) return d.innerHTML = "<p>No pets for this user.</p>";
+
   const [h1,h2] = skillAttrs[list[0].skill];
   let html = `
     <h3>${username}'s Pets</h3>
@@ -268,12 +314,13 @@ function renderUserPets(username){
       </tr>`;
 
   list.forEach(p=>{
+    const [a1,a2] = skillAttrs[p.skill];
     html += `
       <tr>
         <td>${p.name}</td>
         <td>${p.breed}</td>
-        <td>${h1}: ${p.bold1Value}</td>
-        <td>${h2}: ${p.bold2Value}</td>
+        <td>${a1}: ${p.bold1Value}</td>
+        <td>${a2}: ${p.bold2Value}</td>
         <td>${p.bloodline}</td>
         <td>${p.skill}</td>
       </tr>`;
@@ -282,3 +329,29 @@ function renderUserPets(username){
   html += "</table>";
   d.innerHTML = html;
 }
+
+// —————————————————————————————————————————
+//  9) Add loading indicator
+// —————————————————————————————————————————
+function showLoading() {
+  const loadingDiv = document.createElement('div');
+  loadingDiv.id = 'loading';
+  loadingDiv.innerHTML = 'Loading pet data...';
+  loadingDiv.style.cssText = 'padding: 20px; text-align: center; font-weight: bold;';
+
+  if (document.getElementById("searchApp")) {
+    document.getElementById("searchApp").innerHTML = '';
+    document.getElementById("searchApp").appendChild(loadingDiv);
+  }
+
+  if (document.getElementById("petsApp")) {
+    document.getElementById("petsApp").innerHTML = '';
+    document.getElementById("petsApp").appendChild(loadingDiv);
+  }
+}
+
+// Show loading indicator before fetching data
+window.addEventListener("DOMContentLoaded", () => {
+  showLoading();
+  fetchPets();
+});
