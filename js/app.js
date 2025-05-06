@@ -20,7 +20,7 @@ const skillAttrs = {
   "War of Conquest": ["Physique", "Liveliness"],
   "School of Athens": ["Intelligence", "Obedience"],
   "Dragon Island Treasure Hunt": ["Intelligence", "Friendliness"],
-  "Knight Parades": ["Physique", "Liveliness"],
+  "Knight Parades": ["Intelligence", "Friendliness"],
   /* ...add the rest... */
 };
 
