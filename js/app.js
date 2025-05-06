@@ -2,7 +2,12 @@
 //  1) Members
 // —————————————————————————————————————————
 const users = [ "Hope", "Z0mgphunk", "Miyu", "te Cain", "Dale", "Magdalina", "Air", "Mialyno",
-                "gon Fruit", "Mankone", "Aramos", "te LadyMarion", "te Victor", "MiraSnow"];
+                "gon Fruit", "Mankone", "Aramos", "te LadyMarion", "te Victor", "MiraSnow",
+                "nati&nasti", "Maestro98", "PaniKotačka", "WickedWitch", "Daenerys",
+                "Кери", "Lord Edward", "Roberta", "MarcyQueen", "ScrappyCocco",
+                "tinchen", "Eloisya", "Maiwenna", "Astilabora", "Sunshine",
+                "Anaïs", "Artémis", "Pégase", "kepat", "Dihya", "Aeslin",
+                "Amoux", "Octavie Semper", "Rüffel", "Aliénor"];
 
 // —————————————————————————————————————————
 //  2) Bloodlines & their two bold attributes
