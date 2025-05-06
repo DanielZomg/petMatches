@@ -10,7 +10,7 @@ const users = [ "Hope", "Z0mgphunk", "Miyu", "te Cain", "Dale", "Magdalina", "Ai
 const skillList = [
   "Uncharted Waters","Masquerade Ball","Negotiations","War of Conquest",
   "School of Athens","Dragon Island Treasure Hunt","Knight Parades",
-  "Mystery Murder"
+  "Mystery Murder", "Realm Revival", "Siege of the Undead"
   /* ...add the rest... */
 ];
 
@@ -22,7 +22,9 @@ const skillAttrs = {
   "School of Athens": ["Intelligence", "Obedience"],
   "Dragon Island Treasure Hunt": ["Intelligence", "Friendliness"],
   "Knight Parades": ["Intelligence", "Friendliness"],
-  "Mystery Murder": ["Obedience", "Liveliness"]
+  "Mystery Murder": ["Obedience", "Liveliness"],
+  "Realm Revival": ["Physique", "Friendliness"],
+  "Siege of the Undead": ["Obedience", "Friendliness"]
   /* ...add the rest... */
 };
 
@@ -68,7 +70,7 @@ async function fetchPets() {
         if (!colLabel) continue; // skip unnamed/empty columns
 
         const cell = row.c[i];
-        const value = cell ? cell.v : '';
+        let value = cell ? cell.v : '';
         const key = headers[headerIndex++];
 
         // Trim the value if it's a string
