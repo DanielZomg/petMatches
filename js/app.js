@@ -10,7 +10,7 @@ const users = [ "Hope", "Z0mgphunk", "Miyu", "te Cain", "Dale", "Magdalina", "Ai
 const skillList = [
   "Uncharted Waters","Masquerade Ball","Negotiations","War of Conquest",
   "School of Athens","Dragon Island Treasure Hunt","Knight Parades",
-  "Murder Mystery"
+  "Mystery Murder"
   /* ...add the rest... */
 ];
 
@@ -22,7 +22,7 @@ const skillAttrs = {
   "School of Athens": ["Intelligence", "Obedience"],
   "Dragon Island Treasure Hunt": ["Intelligence", "Friendliness"],
   "Knight Parades": ["Intelligence", "Friendliness"],
-  "Murder Mystery": ["Obedience", "Liveliness"]
+  "Mystery Murder": ["Obedience", "Liveliness"]
   /* ...add the rest... */
 };
 
@@ -40,36 +40,8 @@ const PETS_JSON_URL = "https://docs.google.com/spreadsheets/d/1dugaEHpf8IVVkN5We
 const bloodRank = { None:0, Bronze:1, Silver:2, Gold:3 };
 
 // —————————————————————————————————————————
-//  5) CSV Parser and Data Fetching
+//  5) Data fetching
 // —————————————————————————————————————————
-function parseCSV(csvText) {
-  const lines = csvText.trim().split('\n');
-  return lines.map(line => {
-    // Handle both quoted and unquoted values
-    const values = [];
-    let inQuote = false;
-    let currentValue = '';
-
-    for (let i = 0; i < line.length; i++) {
-      const char = line[i];
-
-      if (char === '"' && !inQuote) {
-        inQuote = true;
-      } else if (char === '"' && inQuote) {
-        inQuote = false;
-      } else if (char === ',' && !inQuote) {
-        values.push(currentValue);
-        currentValue = '';
-      } else {
-        currentValue += char;
-      }
-    }
-
-    // Add the last value
-    values.push(currentValue);
-    return values;
-  });
-}
 
 async function fetchPets() {
   try {
@@ -99,6 +71,12 @@ async function fetchPets() {
         const value = cell ? cell.v : '';
         const key = headers[headerIndex++];
 
+        // Trim the value if it's a string
+        if (typeof value === 'string') {
+          value = value.trim();
+        }
+
+        // If the column is 'bold1Value' or 'bold2Value', parse as integers
         pet[key] = (key === 'bold1Value' || key === 'bold2Value')
           ? parseInt(value, 10) || 0
           : value;
