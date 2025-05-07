@@ -13,10 +13,29 @@ const users = [ "Hope", "Z0mgphunk", "Miyu", "te Cain", "Dale", "Magdalina", "Ai
 //  2) Bloodlines & their two bold attributes
 // —————————————————————————————————————————
 const skillList = [
-  "Uncharted Waters","Masquerade Ball","Negotiations","War of Conquest",
-  "School of Athens","Dragon Island Treasure Hunt","Knight Parades",
-  "Mystery Murder", "Realm Revival", "Siege of the Undead"
-  /* ...add the rest... */
+  "Uncharted Waters",
+  "Masquerade Ball",
+  "Negotiations",
+  "War of Conquest",
+  "School of Athens",
+  "Dragon Island Treasure Hunt",
+  "Knight Parades",
+  "Mystery Murder",
+  "Realm Revival",
+  "Siege of the Undead",
+  "Ballroom",
+  "Dragon Bounty",
+  "Dragon Island",
+  "Nibelungen Treasure"
+  "Pet Race",
+  "Texas Hold'em",
+  "Royal Mines",
+  "Scarlet Beauty",
+  "Snow Mountain Exploration",
+  "Twilight Castle",
+  "Uncharted Waters",
+  "War of Lions (Fortress War)",
+  "War of Lions (Supply Reserves)"
 ];
 
 const skillAttrs = {
@@ -29,8 +48,20 @@ const skillAttrs = {
   "Knight Parades": ["Intelligence", "Friendliness"],
   "Mystery Murder": ["Obedience", "Liveliness"],
   "Realm Revival": ["Physique", "Friendliness"],
-  "Siege of the Undead": ["Obedience", "Friendliness"]
-  /* ...add the rest... */
+  "Siege of the Undead": ["Obedience", "Friendliness"],
+  "Ballroom": ["Intelligence", "Obedience"],
+  "Dragon Bounty": ["Physique", "Friendliness"],
+  "Dragon Island": ["Liveliness", "Friendliness"],
+  "Nibelungen Treasure": ["Obedience", "Friendliness"],
+  "Pet Race": ["Intelligence", "Physique"],
+  "Texas Hold'em": ["Intelligence", "Liveliness"],
+  "Royal Mines": ["Liveliness", "Friendliness"],
+  "Scarlet Beauty": ["Intelligence", "Physique"],
+  "Snow Mountain Exploration": ["Physique", "Liveliness"],
+  "Twilight Castle": ["Liveliness", "Obedience"],
+  "Uncharted Waters": ["Physique", "Liveliness"],
+  "War of Lions (Fortress War)": ["Intelligence", "Friendliness"],
+  "War of Lions (Supply Reserves)": ["Physique", "Obedience"]
 };
 
 // —————————————————————————————————————————
