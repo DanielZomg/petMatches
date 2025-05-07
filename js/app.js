@@ -13,7 +13,6 @@ const users = [ "Hope", "Z0mgphunk", "Miyu", "te Cain", "Dale", "Magdalina", "Ai
 //  2) Bloodlines & their two bold attributes
 // —————————————————————————————————————————
 const skillList = [
-  "Uncharted Waters",
   "Masquerade Ball",
   "Negotiations",
   "War of Conquest",
@@ -39,7 +38,6 @@ const skillList = [
 ];
 
 const skillAttrs = {
-  "Uncharted Waters": ["Physique", "Liveliness"],
   "Masquerade Ball": ["Intelligence",  "Liveliness"],
   "Negotiations": ["Obedience", "Physique"],
   "War of Conquest": ["Physique", "Liveliness"],
