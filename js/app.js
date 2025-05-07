@@ -275,7 +275,7 @@ function renderResults(list){
   let html = `
     <table>
       <tr>
-        <th>Owner</th><th>Name</th>th>Breed</th><th>${h1}</th><th>${h2}</th>
+        <th>Owner</th><th>Name</th><th>Breed</th><th>${h1}</th><th>${h2}</th>
         <th>Bloodline</th><th>Skill</th>
       </tr>`;
 
