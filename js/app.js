@@ -268,12 +268,11 @@ function renderResults(list){
   // Sort the list by owner name alphabetically
   list.sort((a, b) => a.owner.localeCompare(b.owner));
 
-  // header uses the two bold attributes of the first pet
-  const [h1,h2] = skillAttrs[list[0].skill];
+  // headers
   let html = `
     <table>
       <tr>
-        <th>Owner</th><th>Name</th><th>Breed</th><th>${h1}</th><th>${h2}</th>
+        <th>Owner</th><th>Name</th><th>Breed</th><th>Required 1</th><th>Required 2</th>
         <th>Bloodline</th><th>Skill</th>
       </tr>`;
 
@@ -326,12 +325,11 @@ function renderUserPets(username){
   // Check if the list has items before trying to access skills
   if (list.length === 0) return d.innerHTML = "<p>No pets for this user.</p>";
 
-  const [h1,h2] = skillAttrs[list[0].skill];
   let html = `
     <h3>${username}'s Pets</h3>
     <table>
       <tr><th>Name</th><th>Breed</th>
-          <th>${h1}</th><th>${h2}</th>
+          <th>Required 1</th><th>Required 2</th>
           <th>Bloodline</th><th>Skill</th>
       </tr>`;
 
