@@ -26,7 +26,7 @@ const skillList = [
   "Ballroom",
   "Dragon Bounty",
   "Dragon Island",
-  "Nibelungen Treasure"
+  "Nibelungen Treasure",
   "Pet Race",
   "Texas Hold'em",
   "Royal Mines",
