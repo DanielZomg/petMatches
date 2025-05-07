@@ -267,6 +267,9 @@ function renderResults(list){
   const d = document.getElementById("results");
   if (!list.length) return d.innerHTML = "<p>No pets found.</p>";
 
+  // Sort the list by owner name alphabetically
+  list.sort((a, b) => a.owner.localeCompare(b.owner));
+
   // header uses the two bold attributes of the first pet
   const [h1,h2] = skillAttrs[list[0].skill];
   let html = `
