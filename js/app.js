@@ -272,7 +272,7 @@ function renderResults(list){
   let html = `
     <table>
       <tr>
-        <th>Owner</th><th>Name</th><th>Breed</th><th>Required 1</th><th>Required 2</th>
+        <th>Owner</th><th>Name</th><th>Breed</th><th>Required Attribute 1</th><th>Required Attribute 2</th>
         <th>Bloodline</th><th>Skill</th>
       </tr>`;
 
@@ -329,7 +329,7 @@ function renderUserPets(username){
     <h3>${username}'s Pets</h3>
     <table>
       <tr><th>Name</th><th>Breed</th>
-          <th>Required 1</th><th>Required 2</th>
+          <th>Required Attribute 1</th><th>Required Attribute 2</th>
           <th>Bloodline</th><th>Skill</th>
       </tr>`;
 
