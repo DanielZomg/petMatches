@@ -373,8 +373,34 @@ function showLoading() {
   }
 }
 
+// Dark Mode toggle functionality
+function setupDarkMode() {
+  const toggleSwitch = document.querySelector('#checkbox');
+  const currentTheme = localStorage.getItem('theme');
+
+  // Check for saved theme preference
+  if (currentTheme) {
+    document.body.classList.add(currentTheme);
+    if (currentTheme === 'dark-mode') {
+      toggleSwitch.checked = true;
+    }
+  }
+
+  // Theme switch event handler
+  toggleSwitch.addEventListener('change', function(e) {
+    if (e.target.checked) {
+      document.body.classList.add('dark-mode');
+      localStorage.setItem('theme', 'dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+      localStorage.setItem('theme', '');
+    }
+  });
+}
+
 // Show loading indicator before fetching data
 window.addEventListener("DOMContentLoaded", () => {
   showLoading();
   fetchPets();
+  setupDarkMode(); // To initialise dark mode
 });

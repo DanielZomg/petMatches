@@ -46,3 +46,109 @@ th, td {
 th {
   background: #f1f1f1;
 }
+
+/* Dark Mode styles */
+body.dark-mode {
+  background: #121212;
+  color: #bcbcbc;
+}
+
+body.dark-mode header {
+  background: #1a1a2e;
+  color: #bcbcbc; /* Change header text colour to light grey */
+}
+
+
+body.dark-mode nav a {
+  color: #bcbcbc; /* Change nav link colour to light grey */
+}
+
+
+body.dark-mode main {
+  background: #1f1f1f;
+  color: #bcbcbc;
+}
+
+body.dark-mode button {
+  background: #2d4263;
+  color: #bcbcbc;
+}
+
+body.dark-mode button:hover {
+  background: #3e5f8a;
+}
+
+body.dark-mode table {
+  color: #bcbcbc;
+}
+
+body.dark-mode th, body.dark-mode td {
+  border-color: #333;
+}
+
+body.dark-mode th {
+  background: #2d2d2d;
+}
+
+body.dark-mode select, body.dark-mode input {
+  background: #2d2d2d;
+  color: #bcbcbc;
+  border: 1px solid #444;
+}
+
+/* Dark Mode toggle */
+.theme-switch-wrapper {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+
+.theme-switch {
+  display: inline-block;
+  height: 24px;
+  position: relative;
+  width: 50px;
+}
+
+.theme-switch input {
+  display: none;
+}
+
+.slider {
+  background-color: #ccc;
+  bottom: 0;
+  cursor: pointer;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  background-color: white;
+  bottom: 4px;
+  content: "";
+  height: 16px;
+  left: 4px;
+  position: absolute;
+  transition: .4s;
+  width: 16px;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #2d4263;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.theme-switch-wrapper em {
+  margin-left: 10px;
+  font-size: 1rem;
+}
