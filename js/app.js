@@ -127,7 +127,7 @@ async function fetchPets() {
 
     console.log(`✅ Loaded ${pets.length} pets`);
 
-    const owners = [...new Set(pets.map(p => p.owner))].sort();
+    const owners = [...new Set(pets.map(p => p.owner))].sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
     window.users = owners; // store globally so initMyPetsApp can use it
 
     if (document.getElementById("searchApp")) initSearchApp();
