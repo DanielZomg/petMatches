@@ -1,6 +1,7 @@
 // —————————————————————————————————————————
 //  1) Members
 // —————————————————————————————————————————
+/*
 const users = [ "Hope", "Z0mgphunk", "Miyu", "te Cain", "Dale", "Magdalina", "Air", "Mialyno",
                 "gon Fruit", "Mankone", "Aramos", "te LadyMarion", "te Victor", "MiraSnow",
                 "nati&nasti", "Maestro98", "PaniKotačka", "WickedWitch", "Daenerys",
@@ -8,6 +9,7 @@ const users = [ "Hope", "Z0mgphunk", "Miyu", "te Cain", "Dale", "Magdalina", "Ai
                 "tinchen", "Eloisya", "Maiwenna", "Astilabora", "Sunshine",
                 "Anaïs", "Artémis", "Pégase", "kepat", "Dihya", "Aeslin",
                 "Amoux", "Octavie Semper", "Rüffel", "Aliénor"];
+*/
 
 // —————————————————————————————————————————
 //  2) Bloodlines & their two bold attributes
@@ -124,6 +126,10 @@ async function fetchPets() {
     });
 
     console.log(`✅ Loaded ${pets.length} pets`);
+
+    const owners = [...new Set(pets.map(p => p.owner))].sort();
+    window.users = owners; // store globally so initMyPetsApp can use it
+
     if (document.getElementById("searchApp")) initSearchApp();
     if (document.getElementById("petsApp")) initMyPetsApp();
 
@@ -302,10 +308,10 @@ function initMyPetsApp(){
   app.innerHTML = `
     <h2>Our pets</h2>
     <label>Select user:
-      <select id="userSelect">
-        <option value="">-- pick user --</option>
-        ${users.map(u=>`<option>${u}</option>`).join("")}
-      </select>
+        <select id="userSelect">
+          <option value="">-- pick user --</option>
+          ${window.users.map(u => `<option>${u}</option>`).join("")}
+        </select>
     </label>
     <div id="myPetsList"></div>
   `;
