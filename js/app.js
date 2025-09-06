@@ -86,8 +86,12 @@ async function fetchPets() {
     const response = await fetch(PETS_JSON_URL);
     const text = await response.text();
 
-    // Remove the wrapper function from the Visualization API response
-    const json = JSON.parse(text.substring(47).slice(0, -2));
+    // Find the start and end of the JSON object inside the wrapper
+    const jsonStart = text.indexOf('{');
+    const jsonEnd = text.lastIndexOf('}');
+    const jsonString = text.substring(jsonStart, jsonEnd + 1);
+
+    const json = JSON.parse(jsonString);
     const table = json.table;
 
     // Get valid headers (non-empty labels only)
